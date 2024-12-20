@@ -7,7 +7,7 @@ fetch('CountriesData.json')
       return;
     }
 
-    // global veraible
+    // global variable
     let allCountries = countries;
 
     // view the countries
@@ -39,6 +39,25 @@ fetch('CountriesData.json')
 
     displayCountries(allCountries);
 
+    // Filter by input
+    function filteredCountriesByInput() {
+      const filterText = document.getElementById('country-filter').value.toLowerCase();
+
+      // Filter the countries based on the input
+      const filteredCountries = allCountries.filter(country =>
+        country.name.toLowerCase().includes(filterText) || // Match for name
+        country.capital.toLowerCase().includes(filterText) || // Match for capital
+        country.population.toString().includes(filterText) || // Match population
+        country.region.toLowerCase().includes(filterText) // Match region
+      );
+
+      // Display the filtered results
+      displayCountries(filteredCountries);
+    }
+
+    // Add event listener to the input field
+    document.getElementById('country-filter').addEventListener('input', filteredCountriesByInput);
+
     // filter by region
     const filterItems = document.querySelectorAll('#dropdown-wrapper ul li');
     filterItems.forEach((item) => {
@@ -47,7 +66,7 @@ fetch('CountriesData.json')
 
         let filteredCountries;
         if (region === 'all') {
-          filteredCountries = allCountries; 
+          filteredCountries = allCountries;
         } else {
           filteredCountries = allCountries.filter((country) => {
             return country.region.toLowerCase() === region;
@@ -79,4 +98,3 @@ document.addEventListener('DOMContentLoaded', function () {
     dropdownWrapper.classList.toggle('open');
   });
 });
-
