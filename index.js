@@ -71,10 +71,9 @@ fetch('CountriesData.json')
 
       // Filter the countries based on the input
       const filteredCountries = allCountries.filter(country =>
-        country.name.toLowerCase().includes(filterText) || // Match for name
-        country.capital.toLowerCase().includes(filterText) || // Match for capital
-        country.population.toString().includes(filterText) || // Match population
-        country.region.toLowerCase().includes(filterText) // Match region
+        Object.values(country).some(value =>
+          value.toString().toLowerCase().includes(filterText)
+        )
       );
 
       // Display the filtered results
